@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<style>
+			<!--Стиль для спортивного внешнего вида --> 
+			body{
+				text-align:center;
+			}
+			table{
+				border-collapse: collapse;
+				width:60%;
+				}
+			td,th{
+				border: 1px solid black;
+				width:20%;
+				text-align:left;
+				font-weight:normal;
+				padding-left:1%;
+			}
+		</style>
+	</head>
+	<body>
+	<?php
+	$data=[
+			['Иванов', 'Математика', 5],
+			['Иванов', 'Математика', 4],
+			['Иванов', 'Математика', 5],
+			['Петров', 'Математика', 5],
+			['Сидоров', 'Физика', 4],
+			['Иванов', 'Физика', 4],
+			['Петров', 'ОБЖ', 4]
+			];	
+	/*создание двух таблиц, содержащих имена и домены отдельно
+	для более легкого маршрута (или по крайней мере для меня :) )*/ 
+	$table_names=['Иванов','Петров','Сидоров'];
+	$table_subjects=[ 'Математика', 'ОБЖ','Физика'];
+	
+	/*создание таблицы*/
+	?><table>
+		<!-- создание заголовка таблицы -->
+		<tr>
+			<th></th>
+			<th>Математика</th>
+			<th>ОБЖ</th>
+			<th>Физика</th>
+		</tr>
+		<?php
+		/* цикл просмотра для суммирования
+		результатов	по человеку и по домену */ 
+		for($i=0;$i<count($table_names);$i++){ ?>
+			<tr>	
+				<td>
+				<?php echo $table_names[$i]; ?></td>
+			<?php	
+			for($j=0;$j<count($table_subjects);$j++){
+				$mark=0;
+				foreach($data as $key_data => $table_in_data){
+					if(in_array($table_names[$i],$table_in_data) AND in_array($table_subjects[$j],$table_in_data))
+						$mark+=$table_in_data[2];
+				}
+				/* Если значение равно 0, ячейка таблицы остается пустой.
+				в противном случае он заполняется рассчитанной суммой */
+				if($mark==0){
+				?><td></td><?php }
+				elseif($mark!=0){
+				?><td><?php echo $mark; ?></td><?php }	
+			}
+			//закрытие линии
+			?></tr><?php
+		}	
+		//закрытие стола
+	?></table>
+
+</body>
+</html>
